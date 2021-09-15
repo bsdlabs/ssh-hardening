@@ -1,0 +1,23 @@
+# Test the documentation on SSH hardening
+task:
+  matrix:
+    - name: 14-CURRENT
+      freebsd_instance:
+        image_family: freebsd-14-0-snap
+    - name: 13.0-RELEASE
+      freebsd_instance:
+        image_family: freebsd-13-0
+    - name: 12.2-RELEASE
+      freebsd_instance:
+        image_family: freebsd-12-2
+    - name: 11.4-RELEASE
+      freebsd_instance:
+        image_family: freebsd-11-4
+  script:
+    - sed -i '' 's/^/#/' README.md
+    - sed -i '' 's/^#    //' README.md
+    - echo "#\!/bin/sh\n$(cat README.md)" > freebsd-ssh-hardening.sh
+    - sh ./freebsd-ssh-hardening.sh
+  ssh_audit_artifacts:
+    path: ssh-audit.out
+    type: text/plain
