@@ -21,14 +21,18 @@
     echo "# before hardening" >> ssh-audit.out
     ssh-audit --no-colors localhost >> ssh-audit.out || true
 
-## Remove existing key-pairs, disable DSA & ECDSA, regenerate RSA and Ed25519 keys
+## Remove existing key-pairs, disable DSA & ECDSA
 
     rm -f /etc/ssh/ssh_host_*
     sysrc sshd_dsa_enable="no"
     sysrc sshd_ecdsa_enable="no"
     sysrc sshd_ed25519_enable="yes"
     sysrc sshd_rsa_enable="yes"
-    service sshd keygen
+
+## Regenerate RSA and Ed25519 keys
+
+    ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
+    ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
 
 ## Remove Diffie-Hellman moduli smaller than 3071
 
@@ -120,8 +124,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
                                             `- [info] available since OpenSSH 2.1.0, Dropbear SSH 0.28
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:/hJ2MWfjsOAIdQbz1WT0I6BPiXveLmN/w8NYpFl+xIM
-(fin) ssh-rsa: SHA256:SoCaYwWS1fKwbXwT2F044FhZ5gijwy/wDmLemgzoqW0
+(fin) ssh-ed25519: SHA256://vc4mr/g2BTKIdK3NERXkgPB2N3eUWu1w9ogRzl+jU
+(fin) ssh-rsa: SHA256:LTh9CSdUlWAIEENm9zuouPcLYS3Z2gfGVvarLy2Hrcs
 
 # algorithm recommendations (for OpenSSH 9.3)
 (rec) -diffie-hellman-group14-sha256        -- kex algorithm to remove
@@ -160,8 +164,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
                                                       `- [info] A bug in OpenSSH causes it to fall back to a 2048-bit modulus regardless of server configuration (https://bugzilla.mindrot.org/show_bug.cgi?id=2793)
 
 # host-key algorithms
-(key) rsa-sha2-512 (3072-bit)               -- [info] available since OpenSSH 7.2
-(key) rsa-sha2-256 (3072-bit)               -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-512 (4096-bit)               -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256 (4096-bit)               -- [info] available since OpenSSH 7.2
 (key) ssh-ed25519                           -- [info] available since OpenSSH 6.5
 
 # encryption algorithms (ciphers)
@@ -179,8 +183,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 (mac) umac-128-etm@openssh.com              -- [info] available since OpenSSH 6.2
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:i0cwnGF12eus8bX7A+cw2hq+ZqBmP6hceYBuQLHnTP4
-(fin) ssh-rsa: SHA256:fFc5jCYQwcyrR2UjlNSPhTYtFDWfhLitmtoU2p0BcmM
+(fin) ssh-ed25519: SHA256:fadjjnDRlCNwjheWnNP0MwiaM3g2wXAyT3a+cExyV9g
+(fin) ssh-rsa: SHA256:Ch0vT4Ys23MrLX4YGHju++Zl4/jUUFty3WEjjFWfYbg
 ```
 </details>
 
