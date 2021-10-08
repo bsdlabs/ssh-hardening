@@ -16,7 +16,7 @@
     echo "# before hardening" >> ssh-audit.out
     ssh-audit --no-colors localhost >> ssh-audit.out || true
 
-## Remove existing key-pairs, disable DSA & ECDSA, regenerate RSA and ED25519 keys
+## Remove existing key-pairs, disable DSA & ECDSA, regenerate RSA and Ed25519 keys
 
     rm /etc/ssh/ssh_host_*
     sysrc sshd_dsa_enable="no"
@@ -30,7 +30,7 @@
     awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
     mv /etc/ssh/moduli.safe /etc/ssh/moduli
 
-## Disable DSA and ECDSA host keys, enable RSA ed25519 host keys
+## Disable DSA and ECDSA host keys, enable RSA and Ed25519 host keys
 
     sed -i .bak 's/^HostKey \/etc\/ssh\/ssh_host_\(dsa\|ecdsa\)_key$/\#HostKey \/etc\/ssh\/ssh_host_\1_key/g; s/^#HostKey \/etc\/ssh\/ssh_host_\(rsa\|ed25519\)_key$/\HostKey \/etc\/ssh\/ssh_host_\1_key/g' /etc/ssh/sshd_config
 
