@@ -36,7 +36,7 @@
 
 ## Restrict supported key exchange, cipher, and MAC algorithms
 
-    printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\nHostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com" >> /etc/ssh/sshd_config
+    printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,diffie-hellman-group-exchange-sha256\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\nHostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-256,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com\n" >> /etc/ssh/sshd_config
 
 ## Restart sshd and run ssh-audit again, appending output
 
@@ -144,9 +144,12 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 (kex) curve25519-sha256@libssh.org          -- [info] available since OpenSSH 6.5, Dropbear SSH 2013.62
 (kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
+(kex) diffie-hellman-group14-sha256         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) diffie-hellman-group-exchange-sha256 (2048-bit) -- [info] available since OpenSSH 4.4
 
 # host-key algorithms
+(key) rsa-sha2-512 (4096-bit)               -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256 (4096-bit)               -- [info] available since OpenSSH 7.2
 (key) ssh-ed25519                           -- [info] available since OpenSSH 6.5
 
 # encryption algorithms (ciphers)
@@ -165,11 +168,7 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 
 # fingerprints
 (fin) ssh-ed25519: SHA256:EfPanpuzqOLlMbZw5gyaA6ZKBPqSdOuS4fWijVJw8tE
-
-# algorithm recommendations (for OpenSSH 8.7)
-(rec) +diffie-hellman-group14-sha256        -- kex algorithm to append
-(rec) +rsa-sha2-256                         -- key algorithm to append
-(rec) +rsa-sha2-512                         -- key algorithm to append
+(fin) ssh-rsa: SHA256:P/vQR180OHayS+S59ZbVqVR69GgTCD6pDuFnMZnyees
 ```
 </details>
 
