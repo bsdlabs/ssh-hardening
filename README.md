@@ -18,7 +18,7 @@
 
 ## Remove existing key-pairs, disable DSA & ECDSA, regenerate RSA and Ed25519 keys
 
-    rm /etc/ssh/ssh_host_*
+    rm -f /etc/ssh/ssh_host_*
     sysrc sshd_dsa_enable="no"
     sysrc sshd_ecdsa_enable="no"
     sysrc sshd_ed25519_enable="yes"
