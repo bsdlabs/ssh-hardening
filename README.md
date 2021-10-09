@@ -32,7 +32,8 @@
 
 ## Disable DSA and ECDSA host keys, enable RSA ed25519 host keys
 
-    sed -i .bak 's/^HostKey \/etc\/ssh\/ssh_host_\(dsa\|ecdsa\)_key$/\#HostKey \/etc\/ssh\/ssh_host_\1_key/g; s/^#HostKey \/etc\/ssh\/ssh_host_\(rsa\|ed25519\)_key$/\HostKey \/etc\/ssh\/ssh_host_\1_key/g' /etc/ssh/sshd_config
+    sed -i '' -E 's%^#?HostKey /etc/ssh/ssh_host_(dsa|ecdsa)_key%#HostKey /etc/ssh/ssh_host_\1_key%' /etc/ssh/sshd_config
+    sed -i '' -E 's%^#?HostKey /etc/ssh/ssh_host_(rsa|ed25519)_key%HostKey /etc/ssh/ssh_host_\1_key%' /etc/ssh/sshd_config
 
 ## Restrict supported key exchange, cipher, and MAC algorithms
 
