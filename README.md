@@ -16,14 +16,18 @@
     echo "# before hardening" >> ssh-audit.out
     ssh-audit --no-colors localhost >> ssh-audit.out || true
 
-## Remove existing key-pairs, disable DSA & ECDSA, regenerate RSA and Ed25519 keys
+## Remove existing key-pairs, disable DSA & ECDSA
 
     rm -f /etc/ssh/ssh_host_*
     sysrc sshd_dsa_enable="no"
     sysrc sshd_ecdsa_enable="no"
     sysrc sshd_ed25519_enable="yes"
     sysrc sshd_rsa_enable="yes"
-    service sshd keygen
+
+## Regenerate RSA and ED25519 keys
+
+    ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
+    ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
 
 ## Remove Diffie-Hellman moduli smaller than 3071
 
@@ -148,8 +152,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 (kex) diffie-hellman-group-exchange-sha256 (2048-bit) -- [info] available since OpenSSH 4.4
 
 # host-key algorithms
-(key) rsa-sha2-512 (3072-bit)               -- [info] available since OpenSSH 7.2
-(key) rsa-sha2-256 (3072-bit)               -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-512 (4096-bit)               -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256 (4096-bit)               -- [info] available since OpenSSH 7.2
 (key) ssh-ed25519                           -- [info] available since OpenSSH 6.5
 
 # encryption algorithms (ciphers)
