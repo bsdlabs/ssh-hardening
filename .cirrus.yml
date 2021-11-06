@@ -1,28 +1,71 @@
 # Test the documentation on SSH hardening
-task:
+server_task:
   matrix:
-    - name: 12.2-RELEASE
+    - name: Server 12.2-RELEASE
       freebsd_instance:
         image_family: freebsd-12-2
-    - name: 12.2-STABLE
+    - name: Server 12.2-STABLE
       freebsd_instance:
         image_family: freebsd-12-2-snap
-    - name: 13.0-RELEASE
+    - name: Server 13.0-RELEASE
       freebsd_instance:
         image_family: freebsd-13-0
-    - name: 13.0-STABLE
+    - name: Server 13.0-STABLE
       freebsd_instance:
         image_family: freebsd-13-0-snap
-    - name: 14.0-CURRENT
+    - name: Server 14.0-CURRENT
       freebsd_instance:
         image_family: freebsd-14-0-snap
   ssh-hardening_script:
-    - sed -i '' 's/^/#/' README.md
-    - sed -i '' '/^#         .*$/d' README.md
-    - sed -i '' 's/^#    //' README.md
-    - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat README.md)" > ssh-hardening.sh
+    - sed -i '' 's/^/#/' server.md
+    - sed -i '' '/^#         .*$/d' server.md
+    - sed -i '' 's/^#    //' server.md
+    - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat server.md)" > ssh-hardening.sh
     - sh ./ssh-hardening.sh
   always:
     ssh-audit.out_artifacts:
       path: ssh-audit.out
+      type: text/plain
+
+client_task:
+  matrix:
+    - name: Client 12.2-RELEASE
+      freebsd_instance:
+        image_family: freebsd-12-2
+      env:
+        CLIENT: client12
+    - name: Client 12.2-STABLE
+      freebsd_instance:
+        image_family: freebsd-12-2-snap
+      env:
+        CLIENT: client12
+    - name: Client 13.0-RELEASE
+      freebsd_instance:
+        image_family: freebsd-13-0
+      env:
+        CLIENT: client13
+    - name: Client 13.0-STABLE
+      freebsd_instance:
+        image_family: freebsd-13-0-snap
+      env:
+        CLIENT: client13
+    - name: Client 14.0-CURRENT
+      freebsd_instance:
+        image_family: freebsd-14-0-snap
+      env:
+        CLIENT: client14
+  install_ssh-audit_script: pkg install -y security/py-ssh-audit
+  ssh-audit_background_script: ssh-audit -c --no-colors | tee ssh-audit-client.out
+  ssh-hardening_script:
+    - echo $HOME
+    - cat /etc/passwd
+    - grep printf ${CLIENT}.md > client.subr
+    - sed -i '' 's|~|/root|g' client.subr
+    - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat client.subr)" > ssh-client-hardening.sh
+    - sh ./ssh-client-hardening.sh
+  test_ssh_client_script:
+    - ssh localhost -p 2222 -T || true
+  always:
+    ssh-audit-client.out_artifacts:
+      path: ssh-audit-client.out
       type: text/plain
