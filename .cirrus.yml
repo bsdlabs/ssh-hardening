@@ -1,18 +1,18 @@
 # Test the documentation on SSH hardening
 task:
   matrix:
-    - name: 12.2-RELEASE
+    - name: 12.3-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-2
-    - name: 12.2-STABLE
+        image_family: freebsd-12-3
+    - name: 12.4-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-2-snap
-    - name: 13.0-RELEASE
+        image_family: freebsd-12-4
+    - name: 13.1-RELEASE
       freebsd_instance:
-        image_family: freebsd-13-0
-    - name: 13.0-STABLE
+        image_family: freebsd-13-1
+    - name: 13.2-RELEASE
       freebsd_instance:
-        image_family: freebsd-13-0-snap
+        image_family: freebsd-13-2
     - name: 14.0-CURRENT
       freebsd_instance:
         image_family: freebsd-14-0-snap
