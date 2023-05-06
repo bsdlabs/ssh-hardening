@@ -16,9 +16,6 @@ server_task:
     - name: Server 14.0-CURRENT
       freebsd_instance:
         image_family: freebsd-14-0-snap
-  use_latest_packages_script:
-    - mkdir -p /usr/local/etc/pkg/repos
-    - cp .cirrus/FreeBSD.conf /usr/local/etc/pkg/repos/
   ssh-hardening_script:
     - sed -i '' 's/^/#/' server.md
     - sed -i '' '/^#         .*$/d' server.md
