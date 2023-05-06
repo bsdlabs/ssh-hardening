@@ -10,12 +10,12 @@ task:
     - name: 13.2-RELEASE
       freebsd_instance:
         image_family: freebsd-13-2
-#   - name: 13.2-STABLE
-#     freebsd_instance:
-#       image_family: freebsd-13-2-snap
-#   - name: 14.0-CURRENT
-#     freebsd_instance:
-#       image_family: freebsd-14-0-snap
+    - name: 13.2-STABLE
+      freebsd_instance:
+        image_family: freebsd-13-2-snap
+    - name: 14.0-CURRENT
+      freebsd_instance:
+        image_family: freebsd-14-0-snap
   ssh-hardening_script:
     - sed -i '' 's/^/#/' README.md
     - sed -i '' '/^#         .*$/d' README.md
