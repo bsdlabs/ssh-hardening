@@ -48,7 +48,7 @@
   <summary>Send (pastebin) the contents of <code>ssh-audit.out</code></summary>
 
 ```
-FreeBSD cirrus-task-5888949290270720 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n262122-2ef2c26f3f13: Thu Apr 13 08:06:35 UTC 2023     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC amd64
+FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n262122-2ef2c26f3f13: Thu Apr 13 12:00:00 UTC 2023     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC amd64
 # before hardening
 # general
 (gen) banner: SSH-2.0-OpenSSH_9.3 FreeBSD-20230316
