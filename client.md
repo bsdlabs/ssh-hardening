@@ -1,4 +1,4 @@
-# FreeBSD 14.0 OpenSSH Hardening — Client
+# FreeBSD OpenSSH Hardening — Client
 
 ## Run the following in a terminal to harden the OpenSSH client for the local user
 

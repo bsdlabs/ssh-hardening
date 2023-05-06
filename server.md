@@ -1,6 +1,4 @@
-[![Build Status](https://api.cirrus-ci.com/github/bsdlabs/ssh-hardening.svg)](https://cirrus-ci.com/github/bsdlabs/ssh-hardening)
-
-# FreeBSD SSH Hardening
+# FreeBSD OpenSSH Hardening — Server
 
 ## Backup ssh config, install ssh-audit
 
