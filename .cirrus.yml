@@ -16,12 +16,17 @@ task:
     - name: 14.0-CURRENT
       freebsd_instance:
         image_family: freebsd-14-0-snap
+  use_latest_packages_script:
+    - mkdir -p /usr/local/etc/pkg/repos
+    - cp .cirrus/FreeBSD.conf /usr/local/etc/pkg/repos/
   ssh-hardening_script:
     - sed -i '' 's/^/#/' README.md
     - sed -i '' '/^#         .*$/d' README.md
     - sed -i '' 's/^#    //' README.md
-    - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat README.md)" > ssh-hardening.sh
+    - printf "#\!/bin/sh\n%s\n" "$(cat README.md)" > ssh-hardening.sh
     - sh ./ssh-hardening.sh
+    - sh .cirrus/check_for_recommendations.sh
+
   always:
     ssh-audit.out_artifacts:
       path: ssh-audit.out
