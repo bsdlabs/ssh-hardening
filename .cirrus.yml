@@ -37,34 +37,24 @@ client_task:
     - name: Client 12.4-RELEASE
       freebsd_instance:
         image_family: freebsd-12-4
-      env:
-        CLIENT: client12
     - name: Client 12.4-STABLE
       freebsd_instance:
         image_family: freebsd-12-4-snap
-      env:
-        CLIENT: client12
     - name: Client 13.2-RELEASE
       freebsd_instance:
         image_family: freebsd-13-2
-      env:
-        CLIENT: client13
     - name: Client 13.2-STABLE
       freebsd_instance:
         image_family: freebsd-13-2-snap
-      env:
-        CLIENT: client13
     - name: Client 14.0-CURRENT
       freebsd_instance:
         image_family: freebsd-14-0-snap
-      env:
-        CLIENT: client14
   install_ssh-audit_script: pkg install -y security/py-ssh-audit
   ssh-audit_background_script: ssh-audit -c --no-colors | tee ssh-audit-client.out
   ssh-hardening_script:
     - echo $HOME
     - cat /etc/passwd
-    - grep printf ${CLIENT}.md > client.subr
+    - grep printf client.md > client.subr
     - sed -i '' 's|~|/root|g' client.subr
     - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat client.subr)" > ssh-client-hardening.sh
     - sh ./ssh-client-hardening.sh

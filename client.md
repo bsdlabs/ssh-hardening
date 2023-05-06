@@ -10,17 +10,19 @@
 ```
 # general
 (gen) client IP: 127.0.0.1
-(gen) banner: SSH-2.0-OpenSSH_8.7 FreeBSD-20210907
-(gen) software: OpenSSH 8.7 running on FreeBSD (2021-09-07)
+(gen) banner: SSH-2.0-OpenSSH_9.3
+(gen) software: OpenSSH 9.3
 (gen) compression: enabled (zlib@openssh.com, zlib)
 
 # key exchange algorithms
+(kex) sntrup761x25519-sha512@openssh.com    -- [info] available since OpenSSH 8.5
 (kex) curve25519-sha256                     -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
-(kex) curve25519-sha256@libssh.org          -- [info] available since OpenSSH 6.5, Dropbear SSH 2013.62
+                                            `- [info] default key exchange since OpenSSH 6.4
+(kex) curve25519-sha256@libssh.org          -- [info] available since OpenSSH 6.4, Dropbear SSH 2013.62
+                                            `- [info] default key exchange since OpenSSH 6.4
 (kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
 (kex) diffie-hellman-group-exchange-sha256  -- [info] available since OpenSSH 4.4
-(kex) diffie-hellman-group14-sha256         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) ext-info-c
 
 # host-key algorithms
@@ -35,7 +37,7 @@
 
 # encryption algorithms (ciphers)
 (enc) chacha20-poly1305@openssh.com         -- [info] available since OpenSSH 6.5
-                                            `- [info] default cipher since OpenSSH 6.9.
+                                            `- [info] default cipher since OpenSSH 6.9
 (enc) aes256-gcm@openssh.com                -- [info] available since OpenSSH 6.2
 (enc) aes128-gcm@openssh.com                -- [info] available since OpenSSH 6.2
 (enc) aes256-ctr                            -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52

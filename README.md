@@ -2,12 +2,7 @@
 
 # FreeBSD OpenSSH Hardening Guides
 
-Below are guides to harden OpenSSH on FreeBSD.  These instructions will result in the best possible score as of 2021-11-06.
+Below are guides to harden OpenSSH on FreeBSD.  These instructions will result in the best possible score as of 2023-05-06.
 
 [Server Guide](server.md)
-
-Client Guides:
-
-- [FreeBSD 12.4](client12.md)
-- [FreeBSD 13.2](client13.md)
-- [FreeBSD 14.0](client14.md)
+[Client Guide](client.md)
