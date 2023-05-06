@@ -20,8 +20,10 @@ task:
     - sed -i '' 's/^/#/' README.md
     - sed -i '' '/^#         .*$/d' README.md
     - sed -i '' 's/^#    //' README.md
-    - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat README.md)" > ssh-hardening.sh
+    - printf "#\!/bin/sh\n%s\n" "$(cat README.md)" > ssh-hardening.sh
     - sh ./ssh-hardening.sh
+    - sh .cirrus/check_for_recommendations.sh
+
   always:
     ssh-audit.out_artifacts:
       path: ssh-audit.out

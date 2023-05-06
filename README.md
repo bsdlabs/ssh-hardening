@@ -1,10 +1,5 @@
 [![Build Status](https://api.cirrus-ci.com/github/bsdlabs/ssh-hardening.svg)](https://cirrus-ci.com/github/bsdlabs/ssh-hardening)
 
-> **Warning**
-> **All tests are failing**:
-> - On -RELEASE branches, the package version is still 2.5.0
-> - On -STABLE and -CURRENT branches, the package version is 2.9.0, but it warns about "`2048-bit modulus only provides 112-bits of symmetric strength`", something that will likely never be accepted upstream, this aligns to the fact that we could never attain 100% using non-elliptic curve keys.
-
 # FreeBSD SSH Hardening
 
 ## Backup ssh config, install ssh-audit
