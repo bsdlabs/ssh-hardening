@@ -253,7 +253,6 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <li>curve25519-sha256@libssh.org</li>
 <li>diffie-hellman-group16-sha512</li>
 <li>diffie-hellman-group18-sha512</li>
-<li>diffie-hellman-group14-sha256</li>
 <li>diffie-hellman-group-exchange-sha256</li>
 </ul>
 </td>
