@@ -52,8 +52,6 @@ client_task:
   install_ssh-audit_script: pkg install -y security/py-ssh-audit
   ssh-audit_background_script: ssh-audit -c --no-colors | tee ssh-audit-client.out
   ssh-hardening_script:
-    - echo $HOME
-    - cat /etc/passwd
     - grep printf client.md > client.subr
     - sed -i '' 's|~|/root|g' client.subr
     - printf "#\!/bin/sh\nset -e\n%s\n" "$(cat client.subr)" > ssh-client-hardening.sh
