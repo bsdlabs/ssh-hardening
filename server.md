@@ -46,11 +46,11 @@
   <summary>Send (pastebin) the contents of <code>ssh-audit.out</code></summary>
 
 ```
-FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n262122-2ef2c26f3f13: Thu Apr 13 12:00:00 UTC 2023     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC amd64
+FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n266202-559a218c9b25: Thu Nov  2 03:28:19 UTC 2023     root@releng3.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC amd64
 # before hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.3 FreeBSD-20230316
-(gen) software: OpenSSH 9.3 running on FreeBSD (2023-03-16)
+(gen) banner: SSH-2.0-OpenSSH_9.5 FreeBSD-20231004
+(gen) software: OpenSSH 9.5 running on FreeBSD (2023-10-04)
 (gen) compatibility: OpenSSH 8.5+, Dropbear SSH 2018.76+
 (gen) compression: enabled (zlib@openssh.com)
 
@@ -66,9 +66,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
                                             `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
 (kex) ecdh-sha2-nistp521                    -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
                                             `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
-(kex) diffie-hellman-group-exchange-sha256 (2048-bit) -- [warn] 2048-bit modulus only provides 112-bits of symmetric strength
-                                                      `- [info] available since OpenSSH 4.4
-                                                      `- [info] A bug in OpenSSH causes it to fall back to a 2048-bit modulus regardless of server configuration (https://bugzilla.mindrot.org/show_bug.cgi?id=2793)
+(kex) diffie-hellman-group-exchange-sha256 (3072-bit) -- [info] available since OpenSSH 4.4
+                                                      `- [info] OpenSSH's GEX fallback mechanism was triggered during testing. Very old SSH clients will still be able to create connections using a 2048-bit modulus, though modern clients will use 3072. This can only be disabled by recompiling the code (see https://github.com/openssh/openssh-portable/blob/V_9_4/dh.c#L477).
 (kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
 (kex) diffie-hellman-group14-sha256         -- [warn] 2048-bit modulus only provides 112-bits of symmetric strength
@@ -113,10 +112,10 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
                                             `- [info] available since OpenSSH 2.1.0, Dropbear SSH 0.28
 
 # fingerprints
-(fin) ssh-ed25519: SHA256://vc4mr/g2BTKIdK3NERXkgPB2N3eUWu1w9ogRzl+jU
-(fin) ssh-rsa: SHA256:LTh9CSdUlWAIEENm9zuouPcLYS3Z2gfGVvarLy2Hrcs
+(fin) ssh-ed25519: SHA256:A5ybfnFjSRotPO7tJfOIAZp0eRGRjE2ik8buWrV6Ims
+(fin) ssh-rsa: SHA256:EyiW+ShyCBkcNMHw9x2QNZXbpk54BlZ2ELZYEtMN44I
 
-# algorithm recommendations (for OpenSSH 9.3)
+# algorithm recommendations (for OpenSSH 9.5)
 (rec) -diffie-hellman-group14-sha256        -- kex algorithm to remove
 (rec) -ecdh-sha2-nistp256                   -- kex algorithm to remove
 (rec) -ecdh-sha2-nistp384                   -- kex algorithm to remove
@@ -135,8 +134,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 
 # after hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.3 FreeBSD-20230316
-(gen) software: OpenSSH 9.3 running on FreeBSD (2023-03-16)
+(gen) banner: SSH-2.0-OpenSSH_9.5 FreeBSD-20231004
+(gen) software: OpenSSH 9.5 running on FreeBSD (2023-10-04)
 (gen) compatibility: OpenSSH 8.5+, Dropbear SSH 2018.76+
 (gen) compression: enabled (zlib@openssh.com)
 
@@ -148,9 +147,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
                                             `- [info] default key exchange since OpenSSH 6.4
 (kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
 (kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
-(kex) diffie-hellman-group-exchange-sha256 (2048-bit) -- [warn] 2048-bit modulus only provides 112-bits of symmetric strength
-                                                      `- [info] available since OpenSSH 4.4
-                                                      `- [info] A bug in OpenSSH causes it to fall back to a 2048-bit modulus regardless of server configuration (https://bugzilla.mindrot.org/show_bug.cgi?id=2793)
+(kex) diffie-hellman-group-exchange-sha256 (3072-bit) -- [info] available since OpenSSH 4.4
+                                                      `- [info] OpenSSH's GEX fallback mechanism was triggered during testing. Very old SSH clients will still be able to create connections using a 2048-bit modulus, though modern clients will use 3072. This can only be disabled by recompiling the code (see https://github.com/openssh/openssh-portable/blob/V_9_4/dh.c#L477).
 
 # host-key algorithms
 (key) rsa-sha2-512 (4096-bit)               -- [info] available since OpenSSH 7.2
@@ -172,8 +170,8 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 (mac) umac-128-etm@openssh.com              -- [info] available since OpenSSH 6.2
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:fadjjnDRlCNwjheWnNP0MwiaM3g2wXAyT3a+cExyV9g
-(fin) ssh-rsa: SHA256:Ch0vT4Ys23MrLX4YGHju++Zl4/jUUFty3WEjjFWfYbg
+(fin) ssh-ed25519: SHA256:UoCYwlo7+pOqWt6Ir1NRWSEmuzctC1GQkbHaMk0BkTQ
+(fin) ssh-rsa: SHA256:RpLDROCOMjdeZHNPTMm9GqVFXAY7/OIdRP8qAnfalO4
 ```
 </details>
 
@@ -188,22 +186,22 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <table>
 <tr>
 <th></th>
-<th>Default (OpenSSH 9.3)</th>
+<th>Default (OpenSSH 9.5)</th>
 <th>Hardened</th>
 </tr>
 <tr>
 <th>HostKey</th>
 <td>
 <ul>
+<li>Ed25519</li>
 <li>RSA (3072-bit)</li>
 <li>ECDSA</li>
-<li>Ed25519</li>
 </ul>
 </td>
 <td>
 <ul>
-<li>RSA (4096-bit)</li>
 <li>Ed25519</li>
+<li>RSA (4096-bit)</li>
 </ul>
 </td>
 </tr>
@@ -211,6 +209,7 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <th>Ciphers</th>
 <td>
 <ul>
+<!-- KEX_SERVER_ENCRYPT -->
 <li>chacha20-poly1305@openssh.com</li>
 <li>aes128-ctr</li>
 <li>aes192-ctr</li>
@@ -234,6 +233,7 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <th>KexAlgorithms</th>
 <td>
 <ul>
+<!-- KEX_SERVER_KEX -->
 <li>sntrup761x25519-sha512@openssh.com</li>
 <li>curve25519-sha256</li>
 <li>curve25519-sha256@libssh.org</li>
@@ -261,6 +261,7 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <th>MACs</th>
 <td>
 <ul>
+<!-- KEX_SERVER_MAC -->
 <li>umac-64-etm@openssh.com</li>
 <li>umac-128-etm@openssh.com</li>
 <li>hmac-sha2-256-etm@openssh.com</li>
@@ -285,6 +286,7 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <th>HostKeyAlgorithms</th>
 <td>
 <ul>
+<!-- KEX_DEFAULT_PK_ALG -->
 <li>ssh-ed25519-cert-v01@openssh.com</li>
 <li>ecdsa-sha2-nistp256-cert-v01@openssh.com</li>
 <li>ecdsa-sha2-nistp384-cert-v01@openssh.com</li>
@@ -293,7 +295,6 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <li>sk-ecdsa-sha2-nistp256-cert-v01@openssh.com</li>
 <li>rsa-sha2-512-cert-v01@openssh.com</li>
 <li>rsa-sha2-256-cert-v01@openssh.com</li>
-<li>ssh-rsa-cert-v01@openssh.com</li>
 <li>ssh-ed25519</li>
 <li>ecdsa-sha2-nistp256</li>
 <li>ecdsa-sha2-nistp384</li>
@@ -302,7 +303,6 @@ FreeBSD cirrus-task-0000000000000000 14.0-CURRENT FreeBSD 14.0-CURRENT #0 main-n
 <li>sk-ecdsa-sha2-nistp256@openssh.com</li>
 <li>rsa-sha2-512</li>
 <li>rsa-sha2-256</li>
-<li>ssh-rsa</li>
 </ul>
 </td>
 <td>
