@@ -13,9 +13,15 @@ server_task:
     - name: Server 13.2-STABLE
       freebsd_instance:
         image_family: freebsd-13-2-snap
-    - name: Server 14.0-CURRENT
+    - name: Server 14.0-RELEASE
+      freebsd_instance:
+        image_family: freebsd-14-0
+    - name: Server 14.0-STABLE
       freebsd_instance:
         image_family: freebsd-14-0-snap
+    - name: Server 15.0-CURRENT
+      freebsd_instance:
+        image_family: freebsd-15-0-snap
   ssh-hardening_script:
     - sed -i '' 's/^/#/' server.md
     - sed -i '' '/^#         .*$/d' server.md
@@ -43,9 +49,15 @@ client_task:
     - name: Client 13.2-STABLE
       freebsd_instance:
         image_family: freebsd-13-2-snap
-    - name: Client 14.0-CURRENT
+    - name: Client 14.0-RELEASE
+      freebsd_instance:
+        image_family: freebsd-14-0
+    - name: Client 14.0-STABLE
       freebsd_instance:
         image_family: freebsd-14-0-snap
+    - name: Client 15.0-CURRENT
+      freebsd_instance:
+        image_family: freebsd-15-0-snap
   install_ssh-audit_script: pkg install -y security/py-ssh-audit
   ssh-audit_background_script: ssh-audit -c --no-colors | tee ssh-audit-client.out
   ssh-hardening_script:

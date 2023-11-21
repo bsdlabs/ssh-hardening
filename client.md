@@ -10,8 +10,8 @@
 ```
 # general
 (gen) client IP: 127.0.0.1
-(gen) banner: SSH-2.0-OpenSSH_9.3
-(gen) software: OpenSSH 9.3
+(gen) banner: SSH-2.0-OpenSSH_9.5
+(gen) software: OpenSSH 9.5
 (gen) compression: enabled (zlib@openssh.com, zlib)
 
 # key exchange algorithms
