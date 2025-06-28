@@ -36,6 +36,10 @@
 
     printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\nHostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256,rsa-sha2-256-cert-v01@openssh.com\n" >> /etc/ssh/sshd_config
 
+## Optionally: Remove FreeBSD-specific differences
+
+    printf "\n# Remove FreeBSD-specific differences.\nUsePAM no\nUseDNS no\nVersionAddendum none\n" >> /etc/ssh/sshd_config
+
 ## Restart sshd and run ssh-audit again, appending output
 
     service sshd restart
@@ -134,8 +138,8 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 
 # after hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.5 FreeBSD-20231004
-(gen) software: OpenSSH 9.5 running on FreeBSD (2023-10-04)
+(gen) banner: SSH-2.0-OpenSSH_9.5
+(gen) software: OpenSSH 9.5
 (gen) compatibility: OpenSSH 8.5+, Dropbear SSH 2018.76+
 (gen) compression: enabled (zlib@openssh.com)
 
