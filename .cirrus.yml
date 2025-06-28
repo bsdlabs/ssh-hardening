@@ -1,24 +1,12 @@
 # Test the documentation on SSH hardening
 server_task:
   matrix:
-    - name: Server 12.4-RELEASE
+    - name: Server 13.5-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-4
-    - name: Server 12.4-STABLE
+        image_family: freebsd-13-5
+    - name: Server 14.3-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-4-snap
-    - name: Server 13.2-RELEASE
-      freebsd_instance:
-        image_family: freebsd-13-2
-    - name: Server 13.2-STABLE
-      freebsd_instance:
-        image_family: freebsd-13-2-snap
-    - name: Server 14.0-RELEASE
-      freebsd_instance:
-        image_family: freebsd-14-0
-    - name: Server 14.0-STABLE
-      freebsd_instance:
-        image_family: freebsd-14-0-snap
+        image_family: freebsd-14-3
     - name: Server 15.0-CURRENT
       freebsd_instance:
         image_family: freebsd-15-0-snap
@@ -37,24 +25,12 @@ server_task:
 
 client_task:
   matrix:
-    - name: Client 12.4-RELEASE
+    - name: Client 13.5-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-4
-    - name: Client 12.4-STABLE
+        image_family: freebsd-13-5
+    - name: Client 14.3-RELEASE
       freebsd_instance:
-        image_family: freebsd-12-4-snap
-    - name: Client 13.2-RELEASE
-      freebsd_instance:
-        image_family: freebsd-13-2
-    - name: Client 13.2-STABLE
-      freebsd_instance:
-        image_family: freebsd-13-2-snap
-    - name: Client 14.0-RELEASE
-      freebsd_instance:
-        image_family: freebsd-14-0
-    - name: Client 14.0-STABLE
-      freebsd_instance:
-        image_family: freebsd-14-0-snap
+        image_family: freebsd-14-3
     - name: Client 15.0-CURRENT
       freebsd_instance:
         image_family: freebsd-15-0-snap
