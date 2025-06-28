@@ -4,7 +4,7 @@
 
     sudo -s # we need root for most of this
     cp -a /etc/ssh /etc/ssh.bak # backup ssh config just in case
-    pkg install -y security/py-ssh-audit # install ssh-audit (you can make intall if you like)
+    pkg install -y security/py-ssh-audit # install ssh-audit (you can make install if you like)
 
 ## Enable and start sshd, then run ssh-audit, saving the output
 
