@@ -122,8 +122,8 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
                                             `- [info] available since OpenSSH 2.1.0, Dropbear SSH 0.28
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:A5ybfnFjSRotPO7tJfOIAZp0eRGRjE2ik8buWrV6Ims
-(fin) ssh-rsa: SHA256:EyiW+ShyCBkcNMHw9x2QNZXbpk54BlZ2ELZYEtMN44I
+(fin) ssh-ed25519: SHA256:5BF+K3daRjL/loomOa3He1zkUt0TGUw8XxZt4z6Bud4
+(fin) ssh-rsa: SHA256:/aZej4jEnqIWn7fO+mJSCvkjOiY3QBYTLNoapZfCRrI
 
 # algorithm recommendations (for OpenSSH 9.9)
 (rec) -diffie-hellman-group14-sha256        -- kex algorithm to remove
@@ -147,12 +147,17 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 # general
 (gen) banner: SSH-2.0-OpenSSH_9.9 FreeBSD-20250219
 (gen) software: OpenSSH 9.9 running on FreeBSD (2025-02-19)
-(gen) compatibility: OpenSSH 9.6+, Dropbear SSH 2020.79+
+(gen) compatibility: OpenSSH 9.9+, Dropbear SSH 2020.79+
 (gen) compression: enabled (zlib@openssh.com)
 
 # key exchange algorithms
+(kex) sntrup761x25519-sha512                -- [info] available since OpenSSH 9.9
+                                            `- [info] default key exchange since OpenSSH 9.9
+                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
 (kex) sntrup761x25519-sha512@openssh.com    -- [info] available since OpenSSH 8.5
                                             `- [info] default key exchange from OpenSSH 9.0 to 9.8
+                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) mlkem768x25519-sha256                 -- [info] available since OpenSSH 9.9
                                             `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
 (kex) curve25519-sha256                     -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
                                             `- [info] default key exchange from OpenSSH 7.4 to 8.9
@@ -184,8 +189,8 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 (mac) umac-128-etm@openssh.com              -- [info] available since OpenSSH 6.2
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:UoCYwlo7+pOqWt6Ir1NRWSEmuzctC1GQkbHaMk0BkTQ
-(fin) ssh-rsa: SHA256:RpLDROCOMjdeZHNPTMm9GqVFXAY7/OIdRP8qAnfalO4
+(fin) ssh-ed25519: SHA256:Ylur7+KRIdDcFFRHf8ngPbFRsMtYVPNgI+ZDtKjSpzw
+(fin) ssh-rsa: SHA256:bBkNqpmpuHEB3l4gHE7LQ2M0oY9UIYkO+uIDn5xgzlU
 ```
 </details>
 

@@ -15,8 +15,13 @@
 (gen) compression: enabled (zlib@openssh.com)
 
 # key exchange algorithms
+(kex) sntrup761x25519-sha512                -- [info] available since OpenSSH 9.9
+                                            `- [info] default key exchange since OpenSSH 9.9
+                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
 (kex) sntrup761x25519-sha512@openssh.com    -- [info] available since OpenSSH 8.5
                                             `- [info] default key exchange from OpenSSH 9.0 to 9.8
+                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) mlkem768x25519-sha256                 -- [info] available since OpenSSH 9.9
                                             `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
 (kex) curve25519-sha256                     -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
                                             `- [info] default key exchange from OpenSSH 7.4 to 8.9
