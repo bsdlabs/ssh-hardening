@@ -36,6 +36,10 @@
 
     printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512\n\nCiphers aes256-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-gcm@openssh.com,aes128-ctr\n\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n" >> /etc/ssh/sshd_config
 
+## Optionally: Remove some FreeBSD-specific differences
+
+    printf "\n# Remove some FreeBSD-specific differences\nUseDNS no\nVersionAddendum none\n" >> /etc/ssh/sshd_config
+
 ## Restart sshd and run ssh-audit again, appending output
 
     service sshd restart
@@ -145,8 +149,8 @@ FreeBSD cirrus-task-6660257969078272 14.3-RELEASE FreeBSD 14.3-RELEASE releng/14
 
 # after hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.9 FreeBSD-20250219
-(gen) software: OpenSSH 9.9 running on FreeBSD (2025-02-19)
+(gen) banner: SSH-2.0-OpenSSH_9.9
+(gen) software: OpenSSH 9.9
 (gen) compatibility: OpenSSH 9.9+, Dropbear SSH 2020.79+
 (gen) compression: enabled (zlib@openssh.com)
 
