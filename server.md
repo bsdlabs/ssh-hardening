@@ -14,10 +14,9 @@
     echo "# before hardening" >> ssh-audit.out
     ssh-audit --no-colors localhost >> ssh-audit.out || true
 
-## Remove existing key-pairs, disable DSA & ECDSA
+## Remove existing key-pairs, disable ECDSA
 
     rm -f /etc/ssh/ssh_host_*
-    sysrc sshd_dsa_enable="no"
     sysrc sshd_ecdsa_enable="no"
     sysrc sshd_ed25519_enable="yes"
     sysrc sshd_rsa_enable="yes"
@@ -34,7 +33,7 @@
 
 ## Restrict supported key exchange, cipher, and MAC algorithms
 
-    printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512\n\nCiphers aes256-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-gcm@openssh.com,aes128-ctr\n\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n" >> /etc/ssh/sshd_config
+    printf "\n# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\nKexAlgorithms sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org\n\nCiphers aes256-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-gcm@openssh.com,aes128-ctr\n\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n" >> /etc/ssh/sshd_config
 
 ## Restart sshd and run ssh-audit again, appending output
 
@@ -46,151 +45,126 @@
   <summary>Send (pastebin) the contents of <code>ssh-audit.out</code></summary>
 
 ```
-FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n278235-dca2ab32e831: Thu Jun 26 04:58:09 UTC 2025     root@releng3.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC amd64
+FreeBSD cirrus-task-4970050563604480 15.0-RELEASE FreeBSD 15.0-RELEASE releng/15.0-n280995-7aedc8de6446 GENERIC amd64
 # before hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.9 FreeBSD-20250219
-(gen) software: OpenSSH 9.9 running on FreeBSD (2025-02-19)
+(gen) banner: SSH-2.0-OpenSSH_10.0 FreeBSD-20250801
+(gen) software: OpenSSH 10.0 running on FreeBSD (2025-08-01)
 (gen) compatibility: OpenSSH 9.9+, Dropbear SSH 2020.79+
 (gen) compression: enabled (zlib@openssh.com)
 
 # key exchange algorithms
-(kex) sntrup761x25519-sha512                -- [info] available since OpenSSH 9.9
-                                            `- [info] default key exchange since OpenSSH 9.9
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) sntrup761x25519-sha512@openssh.com    -- [info] available since OpenSSH 8.5
-                                            `- [info] default key exchange from OpenSSH 9.0 to 9.8
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) mlkem768x25519-sha256                 -- [info] available since OpenSSH 9.9
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) curve25519-sha256                     -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
-                                            `- [info] default key exchange from OpenSSH 7.4 to 8.9
-(kex) curve25519-sha256@libssh.org          -- [info] available since OpenSSH 6.4, Dropbear SSH 2013.62
-                                            `- [info] default key exchange from OpenSSH 6.5 to 7.3
-(kex) ecdh-sha2-nistp256                    -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
-                                            `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
-(kex) ecdh-sha2-nistp384                    -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
-                                            `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
-(kex) ecdh-sha2-nistp521                    -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
-                                            `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
-(kex) diffie-hellman-group-exchange-sha256 (3072-bit) -- [info] available since OpenSSH 4.4
-                                                      `- [info] OpenSSH's GEX fallback mechanism was triggered during testing. Very old SSH clients will still be able to create connections using a 2048-bit modulus, though modern clients will use 3072. This can only be disabled by recompiling the code (see https://github.com/openssh/openssh-portable/blob/V_9_4/dh.c#L477).
-(kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
-(kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
-(kex) diffie-hellman-group14-sha256         -- [warn] 2048-bit modulus only provides 112-bits of symmetric strength
-                                            `- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
-(kex) ext-info-s                            -- [info] available since OpenSSH 9.6
-                                            `- [info] pseudo-algorithm that denotes the peer supports RFC8308 extensions
-(kex) kex-strict-s-v00@openssh.com          -- [info] pseudo-algorithm that denotes the peer supports a stricter key exchange method as a counter-measure to the Terrapin attack (CVE-2023-48795)
+(kex) mlkem768x25519-sha256               -- [info] available since OpenSSH 9.9
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) sntrup761x25519-sha512              -- [info] available since OpenSSH 9.9
+                                          `- [info] default key exchange since OpenSSH 9.9
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) sntrup761x25519-sha512@openssh.com  -- [info] available since OpenSSH 8.5
+                                          `- [info] default key exchange from OpenSSH 9.0 to 9.8
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) curve25519-sha256                   -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
+                                          `- [info] default key exchange from OpenSSH 7.4 to 8.9
+(kex) curve25519-sha256@libssh.org        -- [info] available since OpenSSH 6.4, Dropbear SSH 2013.62
+                                          `- [info] default key exchange from OpenSSH 6.5 to 7.3
+(kex) ecdh-sha2-nistp256                  -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
+                                          `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
+(kex) ecdh-sha2-nistp384                  -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
+                                          `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
+(kex) ecdh-sha2-nistp521                  -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
+                                          `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
+(kex) ext-info-s                          -- [info] available since OpenSSH 9.6
+                                          `- [info] pseudo-algorithm that denotes the peer supports RFC8308 extensions
+(kex) kex-strict-s-v00@openssh.com        -- [info] pseudo-algorithm that denotes the peer supports a stricter key exchange method as a counter-measure to the Terrapin attack (CVE-2023-48795)
 
 # host-key algorithms
-(key) rsa-sha2-512 (3072-bit)               -- [info] available since OpenSSH 7.2
-(key) rsa-sha2-256 (3072-bit)               -- [info] available since OpenSSH 7.2, Dropbear SSH 2020.79
-(key) ecdsa-sha2-nistp256                   -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
-                                            `- [warn] using weak random number generator could reveal the key
-                                            `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
-(key) ssh-ed25519                           -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
+(key) rsa-sha2-512 (3072-bit)             -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256 (3072-bit)             -- [info] available since OpenSSH 7.2, Dropbear SSH 2020.79
+(key) ecdsa-sha2-nistp256                 -- [fail] using elliptic curves that are suspected as being backdoored by the U.S. National Security Agency
+                                          `- [warn] using weak random number generator could reveal the key
+                                          `- [info] available since OpenSSH 5.7, Dropbear SSH 2013.62
+(key) ssh-ed25519                         -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
 
 # encryption algorithms (ciphers)
-(enc) chacha20-poly1305@openssh.com         -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
-                                            `- [info] default cipher since OpenSSH 6.9
-(enc) aes128-ctr                            -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
-(enc) aes192-ctr                            -- [info] available since OpenSSH 3.7
-(enc) aes256-ctr                            -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
-(enc) aes128-gcm@openssh.com                -- [info] available since OpenSSH 6.2
-(enc) aes256-gcm@openssh.com                -- [info] available since OpenSSH 6.2
+(enc) chacha20-poly1305@openssh.com       -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
+                                          `- [info] default cipher since OpenSSH 6.9
+(enc) aes128-gcm@openssh.com              -- [info] available since OpenSSH 6.2
+(enc) aes256-gcm@openssh.com              -- [info] available since OpenSSH 6.2
+(enc) aes128-ctr                          -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
+(enc) aes192-ctr                          -- [info] available since OpenSSH 3.7
+(enc) aes256-ctr                          -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
 
 # message authentication code algorithms
-(mac) umac-64-etm@openssh.com               -- [warn] using small 64-bit tag size
-                                            `- [info] available since OpenSSH 6.2
-(mac) umac-128-etm@openssh.com              -- [info] available since OpenSSH 6.2
-(mac) hmac-sha2-256-etm@openssh.com         -- [info] available since OpenSSH 6.2
-(mac) hmac-sha2-512-etm@openssh.com         -- [info] available since OpenSSH 6.2
-(mac) hmac-sha1-etm@openssh.com             -- [fail] using broken SHA-1 hash algorithm
-                                            `- [info] available since OpenSSH 6.2
-(mac) umac-64@openssh.com                   -- [warn] using encrypt-and-MAC mode
-                                            `- [warn] using small 64-bit tag size
-                                            `- [info] available since OpenSSH 4.7
-(mac) umac-128@openssh.com                  -- [warn] using encrypt-and-MAC mode
-                                            `- [info] available since OpenSSH 6.2
-(mac) hmac-sha2-256                         -- [warn] using encrypt-and-MAC mode
-                                            `- [info] available since OpenSSH 5.9, Dropbear SSH 2013.56
-(mac) hmac-sha2-512                         -- [warn] using encrypt-and-MAC mode
-                                            `- [info] available since OpenSSH 5.9, Dropbear SSH 2013.56
-(mac) hmac-sha1                             -- [fail] using broken SHA-1 hash algorithm
-                                            `- [warn] using encrypt-and-MAC mode
-                                            `- [info] available since OpenSSH 2.1.0, Dropbear SSH 0.28
+(mac) umac-64-etm@openssh.com             -- [warn] using small 64-bit tag size
+                                          `- [info] available since OpenSSH 6.2
+(mac) umac-128-etm@openssh.com            -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-256-etm@openssh.com       -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-512-etm@openssh.com       -- [info] available since OpenSSH 6.2
+(mac) hmac-sha1-etm@openssh.com           -- [fail] using broken SHA-1 hash algorithm
+                                          `- [info] available since OpenSSH 6.2
+(mac) umac-64@openssh.com                 -- [warn] using encrypt-and-MAC mode
+                                          `- [warn] using small 64-bit tag size
+                                          `- [info] available since OpenSSH 4.7
+(mac) umac-128@openssh.com                -- [warn] using encrypt-and-MAC mode
+                                          `- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-256                       -- [warn] using encrypt-and-MAC mode
+                                          `- [info] available since OpenSSH 5.9, Dropbear SSH 2013.56
+(mac) hmac-sha2-512                       -- [warn] using encrypt-and-MAC mode
+                                          `- [info] available since OpenSSH 5.9, Dropbear SSH 2013.56
+(mac) hmac-sha1                           -- [fail] using broken SHA-1 hash algorithm
+                                          `- [warn] using encrypt-and-MAC mode
+                                          `- [info] available since OpenSSH 2.1.0, Dropbear SSH 0.28
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:5BF+K3daRjL/loomOa3He1zkUt0TGUw8XxZt4z6Bud4
-(fin) ssh-rsa: SHA256:/aZej4jEnqIWn7fO+mJSCvkjOiY3QBYTLNoapZfCRrI
-
-# algorithm recommendations (for OpenSSH 9.9)
-(rec) -diffie-hellman-group14-sha256        -- kex algorithm to remove
-(rec) -ecdh-sha2-nistp256                   -- kex algorithm to remove
-(rec) -ecdh-sha2-nistp384                   -- kex algorithm to remove
-(rec) -ecdh-sha2-nistp521                   -- kex algorithm to remove
-(rec) -ecdsa-sha2-nistp256                  -- key algorithm to remove
-(rec) -hmac-sha1                            -- mac algorithm to remove
-(rec) -hmac-sha1-etm@openssh.com            -- mac algorithm to remove
-(rec) -hmac-sha2-256                        -- mac algorithm to remove
-(rec) -hmac-sha2-512                        -- mac algorithm to remove
-(rec) -umac-128@openssh.com                 -- mac algorithm to remove
-(rec) -umac-64-etm@openssh.com              -- mac algorithm to remove
-(rec) -umac-64@openssh.com                  -- mac algorithm to remove
+(fin) ssh-ed25519: SHA256:YncX/C27MDDmKCSFvkN7F6oo6OJ41QjqmR17W5ZNucc
+(fin) ssh-rsa: SHA256:uppfqLdpxS6uYj/VoaicnoHbXIIM1n0Tp5+oAfcKtxI
 
 # additional info
-(nfo) For hardening guides on common OSes, please see: <https://www.ssh-audit.com/hardening_guides.html>
 (nfo) Be aware that, while this target properly supports the strict key exchange method (via the kex-strict-?-v00@openssh.com marker) needed to protect against the Terrapin vulnerability (CVE-2023-48795), all peers must also support this feature as well, otherwise the vulnerability will still be present.  The following algorithms would allow an unpatched peer to create vulnerable SSH channels with this target: chacha20-poly1305@openssh.com.  If any CBC ciphers are in this list, you may remove them while leaving the *-etm@openssh.com MACs in place; these MACs are fine while paired with non-CBC cipher types.
 
 # after hardening
 # general
-(gen) banner: SSH-2.0-OpenSSH_9.9 FreeBSD-20250219
-(gen) software: OpenSSH 9.9 running on FreeBSD (2025-02-19)
+(gen) banner: SSH-2.0-OpenSSH_10.0 FreeBSD-20250801
+(gen) software: OpenSSH 10.0 running on FreeBSD (2025-08-01)
 (gen) compatibility: OpenSSH 9.9+, Dropbear SSH 2020.79+
 (gen) compression: enabled (zlib@openssh.com)
 
 # key exchange algorithms
-(kex) sntrup761x25519-sha512                -- [info] available since OpenSSH 9.9
-                                            `- [info] default key exchange since OpenSSH 9.9
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) sntrup761x25519-sha512@openssh.com    -- [info] available since OpenSSH 8.5
-                                            `- [info] default key exchange from OpenSSH 9.0 to 9.8
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) mlkem768x25519-sha256                 -- [info] available since OpenSSH 9.9
-                                            `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
-(kex) curve25519-sha256                     -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
-                                            `- [info] default key exchange from OpenSSH 7.4 to 8.9
-(kex) curve25519-sha256@libssh.org          -- [info] available since OpenSSH 6.4, Dropbear SSH 2013.62
-                                            `- [info] default key exchange from OpenSSH 6.5 to 7.3
-(kex) diffie-hellman-group18-sha512         -- [info] available since OpenSSH 7.3
-(kex) diffie-hellman-group-exchange-sha256 (3072-bit) -- [info] available since OpenSSH 4.4
-                                                      `- [info] OpenSSH's GEX fallback mechanism was triggered during testing. Very old SSH clients will still be able to create connections using a 2048-bit modulus, though modern clients will use 3072. This can only be disabled by recompiling the code (see https://github.com/openssh/openssh-portable/blob/V_9_4/dh.c#L477).
-(kex) diffie-hellman-group16-sha512         -- [info] available since OpenSSH 7.3, Dropbear SSH 2016.73
-(kex) ext-info-s                            -- [info] available since OpenSSH 9.6
-                                            `- [info] pseudo-algorithm that denotes the peer supports RFC8308 extensions
-(kex) kex-strict-s-v00@openssh.com          -- [info] pseudo-algorithm that denotes the peer supports a stricter key exchange method as a counter-measure to the Terrapin attack (CVE-2023-48795)
+(kex) sntrup761x25519-sha512              -- [info] available since OpenSSH 9.9
+                                          `- [info] default key exchange since OpenSSH 9.9
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) sntrup761x25519-sha512@openssh.com  -- [info] available since OpenSSH 8.5
+                                          `- [info] default key exchange from OpenSSH 9.0 to 9.8
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) mlkem768x25519-sha256               -- [info] available since OpenSSH 9.9
+                                          `- [info] hybrid key exchange based on post-quantum resistant algorithm and proven conventional X25519 algorithm
+(kex) curve25519-sha256                   -- [info] available since OpenSSH 7.4, Dropbear SSH 2018.76
+                                          `- [info] default key exchange from OpenSSH 7.4 to 8.9
+(kex) curve25519-sha256@libssh.org        -- [info] available since OpenSSH 6.4, Dropbear SSH 2013.62
+                                          `- [info] default key exchange from OpenSSH 6.5 to 7.3
+(kex) ext-info-s                          -- [info] available since OpenSSH 9.6
+                                          `- [info] pseudo-algorithm that denotes the peer supports RFC8308 extensions
+(kex) kex-strict-s-v00@openssh.com        -- [info] pseudo-algorithm that denotes the peer supports a stricter key exchange method as a counter-measure to the Terrapin attack (CVE-2023-48795)
 
 # host-key algorithms
-(key) rsa-sha2-512 (4096-bit)               -- [info] available since OpenSSH 7.2
-(key) rsa-sha2-256 (4096-bit)               -- [info] available since OpenSSH 7.2, Dropbear SSH 2020.79
-(key) ssh-ed25519                           -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
+(key) rsa-sha2-512 (4096-bit)             -- [info] available since OpenSSH 7.2
+(key) rsa-sha2-256 (4096-bit)             -- [info] available since OpenSSH 7.2, Dropbear SSH 2020.79
+(key) ssh-ed25519                         -- [info] available since OpenSSH 6.5, Dropbear SSH 2020.79
 
 # encryption algorithms (ciphers)
-(enc) aes256-gcm@openssh.com                -- [info] available since OpenSSH 6.2
-(enc) aes256-ctr                            -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
-(enc) aes192-ctr                            -- [info] available since OpenSSH 3.7
-(enc) aes128-gcm@openssh.com                -- [info] available since OpenSSH 6.2
-(enc) aes128-ctr                            -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
+(enc) aes256-gcm@openssh.com              -- [info] available since OpenSSH 6.2
+(enc) aes256-ctr                          -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
+(enc) aes192-ctr                          -- [info] available since OpenSSH 3.7
+(enc) aes128-gcm@openssh.com              -- [info] available since OpenSSH 6.2
+(enc) aes128-ctr                          -- [info] available since OpenSSH 3.7, Dropbear SSH 0.52
 
 # message authentication code algorithms
-(mac) hmac-sha2-512-etm@openssh.com         -- [info] available since OpenSSH 6.2
-(mac) hmac-sha2-256-etm@openssh.com         -- [info] available since OpenSSH 6.2
-(mac) umac-128-etm@openssh.com              -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-512-etm@openssh.com       -- [info] available since OpenSSH 6.2
+(mac) hmac-sha2-256-etm@openssh.com       -- [info] available since OpenSSH 6.2
+(mac) umac-128-etm@openssh.com            -- [info] available since OpenSSH 6.2
 
 # fingerprints
-(fin) ssh-ed25519: SHA256:Ylur7+KRIdDcFFRHf8ngPbFRsMtYVPNgI+ZDtKjSpzw
-(fin) ssh-rsa: SHA256:bBkNqpmpuHEB3l4gHE7LQ2M0oY9UIYkO+uIDn5xgzlU
+(fin) ssh-ed25519: SHA256:s9ieIUqh9yd1TnZ6jQjaNRNyHON0J4Ugb9HfOnWoukg
+(fin) ssh-rsa: SHA256:XMA6A0ba4BKcPqbzUv9G6uHbG7ujrXMjtZZO43HKzfc
 ```
 </details>
 
@@ -205,16 +179,17 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 <table>
 <tr>
 <th></th>
-<th>Default (OpenSSH 9.9)</th>
+<th>Default (OpenSSH 10.0)</th>
 <th>Hardened</th>
 </tr>
 <tr>
 <th>HostKey</th>
 <td>
 <ul>
+<!-- SSH_ALLOWED_CA_SIGALGS -->
 <li>Ed25519</li>
-<li>RSA (3072-bit)</li>
 <li>ECDSA</li>
+<li>RSA (3072-bit)</li>
 </ul>
 </td>
 <td>
@@ -230,11 +205,11 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 <ul>
 <!-- KEX_SERVER_ENCRYPT -->
 <li>chacha20-poly1305@openssh.com</li>
+<li>aes128-gcm@openssh.com</li>
+<li>aes256-gcm@openssh.com</li>
 <li>aes128-ctr</li>
 <li>aes192-ctr</li>
 <li>aes256-ctr</li>
-<li>aes128-gcm@openssh.com</li>
-<li>aes256-gcm@openssh.com</li>
 </ul>
 </td>
 <td>
@@ -252,18 +227,14 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 <td>
 <ul>
 <!-- KEX_SERVER_KEX -->
+<li>mlkem768x25519-sha256</li>
 <li>sntrup761x25519-sha512</li>
 <li>sntrup761x25519-sha512@openssh.com</li>
-<li>mlkem768x25519-sha256</li>
 <li>curve25519-sha256</li>
 <li>curve25519-sha256@libssh.org</li>
 <li>ecdh-sha2-nistp256</li>
 <li>ecdh-sha2-nistp384</li>
 <li>ecdh-sha2-nistp521</li>
-<li>diffie-hellman-group-exchange-sha256</li>
-<li>diffie-hellman-group16-sha512</li>
-<li>diffie-hellman-group18-sha512</li>
-<li>diffie-hellman-group14-sha256</li>
 </ul>
 </td>
 <td>
@@ -273,9 +244,6 @@ FreeBSD cirrus-task-0000000000000000 15.0-CURRENT FreeBSD 15.0-CURRENT #0 main-n
 <li>mlkem768x25519-sha256</li>
 <li>curve25519-sha256</li>
 <li>curve25519-sha256@libssh.org</li>
-<li>diffie-hellman-group16-sha512</li>
-<li>diffie-hellman-group18-sha512</li>
-<li>diffie-hellman-group-exchange-sha256</li>
 </ul>
 </td>
 </tr>

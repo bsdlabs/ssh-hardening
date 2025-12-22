@@ -1,15 +1,12 @@
 # Test the documentation on SSH hardening
 server_task:
   matrix:
-    - name: Server 13.5-RELEASE
+    - name: Server 15.0-RELEASE
       freebsd_instance:
-        image_family: freebsd-13-5
-    - name: Server 14.3-RELEASE
-      freebsd_instance:
-        image_family: freebsd-14-3
-    - name: Server 15.0-CURRENT
-      freebsd_instance:
-        image_family: freebsd-15-0-snap
+        image_family: freebsd-15-0-amd64-ufs
+    # - name: Server 16.0-CURRENT
+    #   freebsd_instance:
+    #     image_family: freebsd-16-0-amd64-ufs-snap
   ssh-hardening_script:
     - sed -i '' 's/^/#/' server.md
     - sed -i '' '/^#         .*$/d' server.md
@@ -31,9 +28,12 @@ client_task:
     - name: Client 14.3-RELEASE
       freebsd_instance:
         image_family: freebsd-14-3
-    - name: Client 15.0-CURRENT
+    - name: Client 15.0-RELEASE
       freebsd_instance:
-        image_family: freebsd-15-0-snap
+        image_family: freebsd-15-0-amd64-ufs
+    # - name: Client 16.0-CURRENT
+    #   freebsd_instance:
+    #     image_family: freebsd-16-0-amd64-ufs-snap
   install_ssh-audit_script: pkg install -y security/py-ssh-audit
   ssh-audit_background_script: ssh-audit -c --no-colors | tee ssh-audit-client.out
   ssh-hardening_script:
@@ -46,4 +46,25 @@ client_task:
   always:
     ssh-audit-client.out_artifacts:
       path: ssh-audit-client.out
+      type: text/plain
+
+legacy_server_task:
+  matrix:
+    - name: Server 13.5-RELEASE
+      freebsd_instance:
+        image_family: freebsd-13-5
+    - name: Server 14.3-RELEASE
+      freebsd_instance:
+        image_family: freebsd-14-3
+  ssh-hardening_script:
+    - sed -i '' 's/^/#/' server99.md
+    - sed -i '' '/^#         .*$/d' server99.md
+    - sed -i '' 's/^#    //' server99.md
+    - printf "#\!/bin/sh\n%s\n" "$(cat server99.md)" > ssh-hardening.sh
+    - sh ./ssh-hardening.sh
+    - sh .cirrus/check_for_recommendations.sh
+
+  always:
+    ssh-audit.out_artifacts:
+      path: ssh-audit.out
       type: text/plain
